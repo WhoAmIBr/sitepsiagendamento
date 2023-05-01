@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+             	<title>Agendamento Online</title>
+
+<link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css' rel='stylesheet' />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.print.min.css' rel='stylesheet' media='print' />
+<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
+
+
+<!-- Adiciona um estilo CSS para a página -->
+<style>
+	form {
+		margin-top: 20px;
+	}
+
+	label {
+		display: block;
+		margin-bottom: 5px;
+	}
+
+	input[type=text], input[type=email], input[type=tel], input[type=date], input[type=time], textarea {
+		padding: 10px;
+		font-size: 16px;
+		border-radius: 5px;
+		border: none;
+		box-shadow: 0 0 5px rgba(0,0,0,0.2);
+		margin-bottom: 10px;
+		width: 100%;
+	}
+
+	input[type=submit] {
+		background-color: #008CBA;
+		color: #fff;
+		padding: 10px 20px;
+		font-size: 16px;
+		border-radius: 5px;
+		border: none;
+		cursor: pointer;
+	}
+
+	#calendar {
+		max-width: 900px;
+		margin: 40px auto;
+	}
+
+	h1 {
+		font-family: 'Fredoka One', cursive;
+		font-weight: bold;
+		font-size: 36px;
+		color: #6A0DAD;
+	}
+</style>
+
+<!-- Inclui a fonte Fredoka One -->
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+</head>
+<body>
+	<h1>Agendamento Online</h1>
+	<p>Preencha o formulário abaixo para agendar uma consulta.</p>
+
+<!-- Adiciona um calendário FullCalendar -->
+<div id='calendar'></div>
+
+<!-- Adiciona um formulário de agendamento -->
+<form>
+	<label for="nome">Nome:</label>
+	<input type="text" id="nome" name="nome" required>
+
+	<label for="email">E-mail:</label>
+	<input type="email" id="email" name="email" required>
+
+	<label for="telefone">Telefone:</label>
+	<input type="tel" id="telefone" name="telefone" required>
+
+	<label for="data">Data:</label>
+	<input type="date" id="data" name="data" required>
+
+	<label for="hora">Hora:</label>
+	<input type="time" id="hora" name="hora" required>
+
+	<label for="mensagem">Mensagem:</label>
+	<textarea id="mensagem" name="mensagem"></textarea>
+
+	<input type="submit" value="Agendar" id="enviar-whatsapp">
+</form>
+
+<!-- Adiciona o script para inicializar o calendário -->
+<script>
+$(document).ready(function() {
+  $('#calendar').fullCalendar({
+  // Configurações do calendário
+  header: {
+    left: 'prev,next',
+    center: 'title',
+    right: 'month,agendaWeek,agendaDay'
+  },
+
+// Captura o formulário
+var form = document.querySelector("form");
+
+// Adiciona um ouvinte de eventos para o envio do formulário
+form.addEventListener("submit", function(event) {
+  // Impede o envio do formulário para uma página vazia
+  event.preventDefault();
+
+  // Captura o botão "enviar-whatsapp"
+  var enviarWhatsApp = document.getElementById("enviar-whatsapp");
+
+// Adiciona um ouvinte de eventos ao botão
+enviarWhatsApp.addEventListener("click", function() {
+    // Captura os dados do formulário
+    var nome = document.getElementById("nome").value;
+    var email = document.getElementById("email").value;
+    var telefone = document.getElementById("telefone").value;
+    var data = document.getElementById("data").value;
+    var hora = document.getElementById("hora").value;
+    var mensagem = document.getElementById("mensagem").value;
+
+    // Monta a mensagem do WhatsApp com as informações
+    var textoWhatsApp = "Olá, quero agendar uma consulta. Seguem as informações:\n\n";
+    textoWhatsApp += "Nome: " + nome + "\n";
+    textoWhatsApp += "E-mail: " + email + "\n";
+    textoWhatsApp += "Telefone: " + telefone + "\n";
+    textoWhatsApp += "Data: " + data + "\n";
+    textoWhatsApp += "Hora: " + hora + "\n";
+    textoWhatsApp += "Mensagem: " + mensagem;
+
+    // Redireciona para o WhatsApp com a mensagem preenchida
+    window.location.href = "https://wa.me/5517996540284?text=" + encodeURIComponent(textoWhatsApp);
+});
+  });
+});
+</script>
+</body>
+</html>
